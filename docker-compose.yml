@@ -1,0 +1,29 @@
+services:
+  db:
+    image: postgres:12.6
+    env_file: .env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    expose:
+      - "5432"
+    networks:
+      - database
+  backend:
+    build:
+      context: ./backend
+      target: dev
+    env_file: .env
+    volumes:
+      - ./backend:/usr/src/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    networks:
+      - database
+
+volumes:
+  postgres_data:
+
+networks:
+  database:
