@@ -14,7 +14,7 @@ services:
       target: dev
     env_file: .env
     volumes:
-      - ./backend:/usr/src/app
+      - ./backend:/app
     ports:
       - "8000:8000"
     depends_on:

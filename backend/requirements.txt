@@ -1,2 +1,5 @@
 fastapi==0.64.0
 uvicorn[standard]==0.13.4
+sqlalchemy==1.4.14
+psycopg2==2.8.6
+alembic==1.6.2
