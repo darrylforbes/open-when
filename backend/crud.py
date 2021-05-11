@@ -17,7 +17,8 @@ def read_user_by_email(email: str, db: Session):
 def create_user(user: schemas.UserCreate, db: Session):
     # TODO: implement password hashing
     hashed_password = user.password + 'hash'
-    db_user = models.User(email=user.email, hashed_password=hashed_password)
+    db_user = models.User(email=user.email, hashed_password=hashed_password,
+                          received_messages=[], sent_messages=[])
     db.add(db_user)
     db.commit()
     db.refresh(db_user)
