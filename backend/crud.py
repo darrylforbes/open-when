@@ -14,10 +14,16 @@ def read_user_by_email(email: str, db: Session):
     return db.query(models.User).filter(models.User.email == email).first()
 
 
+def read_user_by_username(username: str, db: Session):
+    return db.query(models.User).filter(
+        models.User.username == username).first()
+
+
 def create_user(user: schemas.UserCreate, db: Session):
     # TODO: implement password hashing
     hashed_password = user.password + 'hash'
-    db_user = models.User(email=user.email, hashed_password=hashed_password,
+    db_user = models.User(username=user.username, email=user.email,
+                          hashed_password=hashed_password,
                           received_messages=[], sent_messages=[])
     db.add(db_user)
     db.commit()
