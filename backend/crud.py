@@ -1,9 +1,54 @@
+import os
+from datetime import datetime, timedelta
+from fastapi import Depends, HTTPException, status
+from fastapi.security import OAuth2PasswordBearer
+from passlib.context import CryptContext
 from sqlalchemy.orm import Session
-import models, schemas
+from jose import JWTError, jwt
+from database import SessionLocal
+import crud
+import models
+import schemas
+
+
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl='token')
+pwd_context = CryptContext(schemes=['bcrypt'], deprecated='auto')
+
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close
 
 
 def read_user(user_id: int, db: Session):
     return db.query(models.User).filter(models.User.id == user_id).first()
+
+
+def read_current_user(token: str = Depends(oauth2_scheme),
+                      db: str = Depends(get_db)):
+    exception = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail='Invalid authentication credentials',
+        headers={'WWW-Authenticate': 'Bearer'}
+    )
+    try:
+        payload = jwt.decode(token, os.environ['SECRET_KEY'],
+                             algorithms=['HS256'])
+        username = payload.get('sub')
+        if username is None:
+            raise exception
+        token_data = schemas.TokenData(username=username)
+    except JWTError:
+        raise exception
+
+    user = crud.read_user_by_username(username=token_data.username, db=db)
+    if user is None:
+        raise exception
+
+    return user
 
 
 def read_all_users(db: Session):
@@ -17,6 +62,15 @@ def read_user_by_email(email: str, db: Session):
 def read_user_by_username(username: str, db: Session):
     return db.query(models.User).filter(
         models.User.username == username).first()
+
+
+def authenticate_user(username: str, password: str, db: Session):
+    user = crud.read_user_by_username(username=username, db=db)
+    if not user:
+        return False
+    if not pwd_context.verify(password, user.hashed_password):
+        return False
+    return user
 
 
 def create_user(user: schemas.UserCreate, pwd_context, db: Session):
@@ -44,3 +98,10 @@ def create_message(message: schemas.MessageCreate, db: Session):
     db.commit()
     db.refresh(db_message)
     return db_message
+
+
+def create_access_token(data: dict):
+    to_encode = data.copy()
+    expire = datetime.utcnow() + timedelta(minutes=15)
+    to_encode.update({'exp': expire})
+    return jwt.encode(to_encode, os.environ['SECRET_KEY'], algorithm='HS256')
