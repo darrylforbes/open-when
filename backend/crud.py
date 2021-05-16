@@ -19,9 +19,8 @@ def read_user_by_username(username: str, db: Session):
         models.User.username == username).first()
 
 
-def create_user(user: schemas.UserCreate, db: Session):
-    # TODO: implement password hashing
-    hashed_password = user.password + 'hash'
+def create_user(user: schemas.UserCreate, pwd_context, db: Session):
+    hashed_password = pwd_context.hash(user.password)
     db_user = models.User(username=user.username, email=user.email,
                           hashed_password=hashed_password,
                           received_messages=[], sent_messages=[])
