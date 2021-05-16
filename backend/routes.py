@@ -16,7 +16,7 @@ def get_db():
 
 
 @router.get('/users/{user_id}/inbox', response_model=list[schemas.Message])
-def read_user_messages(user_id: int, db: Session = Depends(get_db)):
+def read_user_inbox(user_id: int, db: Session = Depends(get_db)):
     db_user = crud.read_user(user_id=user_id, db=db)
     if not db_user:
         raise HTTPException(status_code=404, detail="User does not exist")
@@ -24,7 +24,7 @@ def read_user_messages(user_id: int, db: Session = Depends(get_db)):
 
 
 @router.get('/users/{user_id}/sent', response_model=list[schemas.Message])
-def read_user_messages(user_id: int, db: Session = Depends(get_db)):
+def read_user_sent(user_id: int, db: Session = Depends(get_db)):
     db_user = crud.read_user(user_id=user_id, db=db)
     if not db_user:
         raise HTTPException(status_code=404, detail="User does not exist")
