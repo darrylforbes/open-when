@@ -8,22 +8,32 @@ services:
       - "5432"
     networks:
       - database
-  backend:
+  open-when-backend:
     build:
       context: ./backend
       target: dev
     env_file: .env
     volumes:
       - ./backend:/app
-    ports:
-      - "8000:8000"
+    expose:
+      - "8000"
     depends_on:
       - db
     networks:
       - database
+      - nginx
+  nginx:
+    build: ./nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - open-when-backend
+    networks:
+      - nginx
 
 volumes:
   postgres_data:
 
 networks:
   database:
+  nginx:
