@@ -6,7 +6,8 @@ from sqlalchemy.orm import sessionmaker
 
 SQLALCHEMY_DATABASE_URL = (
     f"postgresql://{os.environ['POSTGRES_USER']}"
-    f":{os.environ['POSTGRES_PASSWORD']}@db/{os.environ['POSTGRES_DB']}"
+    f":{os.environ['POSTGRES_PASSWORD']}@open-when-db"
+    f"/{os.environ['POSTGRES_DB']}"
 )
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
