@@ -6,7 +6,7 @@ EXPOSE 8000
 ENTRYPOINT ["./entrypoint.sh"]
 
 FROM builder AS dev
-VOLUME /usr/src/app
+VOLUME /app
 CMD ["uvicorn", "main:app", "--reload", "--host", "0.0.0.0"]
 
 FROM builder AS prod
