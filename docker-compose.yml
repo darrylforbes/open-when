@@ -22,7 +22,7 @@ services:
     networks:
       - database
       - nginx
-  nginx:
+  open-when-nginx:
     build: ./nginx
     ports:
       - "80:80"
