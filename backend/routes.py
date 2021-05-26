@@ -62,6 +62,23 @@ def read_message(message_id: int, db: Session = Depends(crud.get_db)):
     return msg
 
 
+@router.put('/messages/{message_id}', response_model=schemas.Message)
+def update_message(message_id: int, msg_new: schemas.MessageCreate,
+                   db: Session = Depends(crud.get_db)):
+    msg = crud.read_message(msg_id=message_id, db=db)
+    if not msg:
+        raise HTTPException(status_code=404, detail='Message does not exist')
+    return crud.update_message(msg=msg, msg_new=msg_new, db=db)
+
+
+@router.delete('/messages/{message_id}', response_model=schemas.Message)
+def delete_message(message_id: int, db: Session = Depends(crud.get_db)):
+    msg = crud.read_message(msg_id=message_id, db=db)
+    if not msg:
+        raise HTTPException(status_code=404, detail='Message does not exist')
+    return crud.delete_message(msg=msg, db=db)
+
+
 @router.get('/messages', response_model=list[schemas.Message])
 def read_messages(db: Session = Depends(crud.get_db)):
     return crud.read_messages(db=db)

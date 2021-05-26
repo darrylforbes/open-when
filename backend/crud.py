@@ -2,6 +2,7 @@ import os
 from datetime import datetime, timedelta
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
+from fastapi.encoders import jsonable_encoder
 from passlib.context import CryptContext
 from sqlalchemy.orm import Session
 from jose import JWTError, jwt
@@ -86,6 +87,25 @@ def create_user(user: schemas.UserCreate, pwd_context, db: Session):
 
 def read_message(msg_id: int, db: Session):
     return db.query(models.Message).filter(models.Message.id == msg_id).first()
+
+
+def update_message(msg: models.Message, msg_new: schemas.MessageCreate,
+                   db: Session):
+    data = jsonable_encoder(msg)
+    new_data = msg_new.dict()
+    for field in data:
+        if field in new_data:
+            setattr(msg, field, new_data[field])
+    db.add(msg)
+    db.commit()
+    db.refresh(msg)
+    return msg
+
+
+def delete_message(msg: schemas.Message, db: Session):
+    db.delete(msg)
+    db.commit()
+    return msg
 
 
 def read_messages(db: Session):
