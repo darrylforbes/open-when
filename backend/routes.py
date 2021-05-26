@@ -56,7 +56,10 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(crud.get_db)):
 
 @router.get('/messages/{message_id}', response_model=schemas.Message)
 def read_message(message_id: int, db: Session = Depends(crud.get_db)):
-    return crud.read_message(msg_id=message_id, db=db)
+    msg = crud.read_message(msg_id=message_id, db=db)
+    if not msg:
+        raise HTTPException(status_code=404, detail='Message does not exist')
+    return msg
 
 
 @router.get('/messages', response_model=list[schemas.Message])
