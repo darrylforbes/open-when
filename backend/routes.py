@@ -10,18 +10,18 @@ router = APIRouter()
 
 @router.get('/users/{user_id}/inbox', response_model=list[schemas.Message])
 def read_user_inbox(user_id: int, db: Session = Depends(crud.get_db)):
-    db_user = crud.read_user(user_id=user_id, db=db)
-    if not db_user:
+    user = crud.read_user(user_id=user_id, db=db)
+    if not user:
         raise HTTPException(status_code=404, detail='User does not exist')
-    return db_user.received_messages
+    return user.received_messages
 
 
 @router.get('/users/{user_id}/sent', response_model=list[schemas.Message])
 def read_user_sent(user_id: int, db: Session = Depends(crud.get_db)):
-    db_user = crud.read_user(user_id=user_id, db=db)
-    if not db_user:
+    user = crud.read_user(user_id=user_id, db=db)
+    if not user:
         raise HTTPException(status_code=404, detail='User does not exist')
-    return db_user.sent_messages
+    return user.sent_messages
 
 
 @router.get('/users/me', response_model=schemas.User)
@@ -32,10 +32,10 @@ def read_users_me(current_user: schemas.User
 
 @router.get('/users/{user_id}', response_model=schemas.User)
 def read_user(user_id: int, db: Session = Depends(crud.get_db)):
-    db_user = crud.read_user(user_id=user_id, db=db)
-    if not db_user:
+    user = crud.read_user(user_id=user_id, db=db)
+    if not user:
         raise HTTPException(status_code=404, detail='User does not exist')
-    return db_user
+    return user
 
 
 @router.get('/users', response_model=list[schemas.User])
@@ -45,11 +45,11 @@ def read_users(db: Session = Depends(crud.get_db)):
 
 @router.post('/users', response_model=schemas.User)
 def create_user(user: schemas.UserCreate, db: Session = Depends(crud.get_db)):
-    db_user = crud.read_user_by_username(username=user.username, db=db)
-    if db_user:
+    user = crud.read_user_by_username(username=user.username, db=db)
+    if user:
         raise HTTPException(status_code=400, detail='Username taken')
-    db_user = crud.read_user_by_email(email=user.email, db=db)
-    if db_user:
+    user = crud.read_user_by_email(email=user.email, db=db)
+    if user:
         raise HTTPException(status_code=400, detail='Email already registered')
     return crud.create_user(user=user, pwd_context=crud.pwd_context, db=db)
 
