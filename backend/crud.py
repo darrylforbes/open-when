@@ -51,7 +51,7 @@ def read_current_user(token: str = Depends(oauth2_scheme),
     return user
 
 
-def read_all_users(db: Session):
+def read_users(db: Session):
     return db.query(models.User).all()
 
 
@@ -88,7 +88,7 @@ def read_message(msg_id: int, db: Session):
     return db.query(models.Message).filter(models.Message.id == msg_id).first()
 
 
-def read_all_messages(db: Session):
+def read_messages(db: Session):
     return db.query(models.Message).all()
 
 

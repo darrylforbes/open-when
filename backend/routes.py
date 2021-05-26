@@ -39,8 +39,8 @@ def read_user(user_id: int, db: Session = Depends(crud.get_db)):
 
 
 @router.get('/users', response_model=list[schemas.User])
-def read_all_users(db: Session = Depends(crud.get_db)):
-    return crud.read_all_users(db=db)
+def read_users(db: Session = Depends(crud.get_db)):
+    return crud.read_users(db=db)
 
 
 @router.post('/users', response_model=schemas.User)
@@ -60,8 +60,8 @@ def read_message(message_id: int, db: Session = Depends(crud.get_db)):
 
 
 @router.get('/messages', response_model=list[schemas.Message])
-def read_all_messages(db: Session = Depends(crud.get_db)):
-    return crud.read_all_messages(db=db)
+def read_messages(db: Session = Depends(crud.get_db)):
+    return crud.read_messages(db=db)
 
 
 @router.post('/messages', response_model=schemas.Message)
