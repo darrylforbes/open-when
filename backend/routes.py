@@ -45,11 +45,11 @@ def read_users(db: Session = Depends(crud.get_db)):
 
 @router.post('/users', response_model=schemas.User)
 def create_user(user: schemas.UserCreate, db: Session = Depends(crud.get_db)):
-    user = crud.read_user_by_username(username=user.username, db=db)
-    if user:
+    db_user = crud.read_user_by_username(username=user.username, db=db)
+    if db_user:
         raise HTTPException(status_code=400, detail='Username taken')
-    user = crud.read_user_by_email(email=user.email, db=db)
-    if user:
+    db_user = crud.read_user_by_email(email=user.email, db=db)
+    if db_user:
         raise HTTPException(status_code=400, detail='Email already registered')
     return crud.create_user(user=user, pwd_context=crud.pwd_context, db=db)
 

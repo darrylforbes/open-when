@@ -76,13 +76,13 @@ def authenticate_user(username: str, password: str, db: Session):
 
 def create_user(user: schemas.UserCreate, pwd_context, db: Session):
     hashed_password = pwd_context.hash(user.password)
-    user = models.User(username=user.username, email=user.email,
+    db_user = models.User(username=user.username, email=user.email,
                        hashed_password=hashed_password,
                        received_messages=[], sent_messages=[])
-    db.add(user)
+    db.add(db_user)
     db.commit()
-    db.refresh(user)
-    return user
+    db.refresh(db_user)
+    return db_user
 
 
 def read_message(msg_id: int, db: Session):
