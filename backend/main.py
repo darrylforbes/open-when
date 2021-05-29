@@ -1,7 +1,4 @@
-from typing import Optional
 from fastapi import FastAPI
-from database import engine
-from models import Base
 from routes import router
 
 
