@@ -10,6 +10,6 @@ SQLALCHEMY_DATABASE_URL = (
     f"/{os.environ['POSTGRES_DB']}"
 )
 
-engine = create_engine(SQLALCHEMY_DATABASE_URL)
+engine = create_engine(SQLALCHEMY_DATABASE_URL, pool_size=32, max_overflow=64)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
