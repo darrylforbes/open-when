@@ -1,17 +1,24 @@
-import logo from './logo.svg';
+import { useEffect, useState } from 'react';
 import './App.css';
 import MessageList from './components/MessageList';
+import { apiUrl } from './utils';
 
 const App = () => {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const getData = async () => {
+      const response = await fetch(apiUrl + 'users/1');
+      setUser(await response.json());
+    };
+    getData();
+  }, []);
+
+  console.log(user)
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <MessageList text="testing"/>
-      </header>
+      <MessageList user={user}/>
     </div>
   );
 }
