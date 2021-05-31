@@ -77,8 +77,8 @@ def authenticate_user(username: str, password: str, db: Session):
 def create_user(user: schemas.UserCreate, pwd_context, db: Session):
     hashed_password = pwd_context.hash(user.password)
     db_user = models.User(username=user.username, email=user.email,
-                       hashed_password=hashed_password,
-                       received_messages=[], sent_messages=[])
+                          hashed_password=hashed_password,
+                          received_messages=[], sent_messages=[])
     db.add(db_user)
     db.commit()
     db.refresh(db_user)
