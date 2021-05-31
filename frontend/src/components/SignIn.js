@@ -6,11 +6,13 @@ import {
   TextField,
   Typography
 } from '@material-ui/core';
+import { Redirect } from 'react-router-dom';
 import { apiUrl } from '../utils';
 
 const SignIn = ({ setUser, setToken }) => {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const sendRequest = async (ev) => {
     ev.preventDefault();
@@ -32,6 +34,7 @@ const SignIn = ({ setUser, setToken }) => {
         const json = await response.json();
         setToken(json.access_token);
         setUser(await getMe(json.access_token));
+        setIsLoggedIn(true);
       } else if (response.status === 401) {
         // TODO: popup some error message saying invalid credentials
         console.log('Invalid credentials');
@@ -62,6 +65,7 @@ const SignIn = ({ setUser, setToken }) => {
 
   return (
     <Container>
+      {isLoggedIn ? <Redirect to='/' /> : null}
       <Box>
         <Typography variant='h1'>Sign in</Typography>
         <form>

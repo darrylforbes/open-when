@@ -6,12 +6,14 @@ import {
   TextField,
   Typography
 } from '@material-ui/core';
+import { Redirect } from 'react-router-dom';
 import { apiUrl } from '../utils';
 
 const MessageForm = ({ user }) => {
   const [title, setTitle] = useState('')
   const [body, setBody] = useState('')
   const [recipientId, setRecipientId] = useState(null)
+  const [isMessageSent, setIsMessageSent] = useState(false);
 
   const sendRequest = async (ev) => {
     ev.preventDefault();
@@ -33,8 +35,7 @@ const MessageForm = ({ user }) => {
       });
 
       if (response.status === 200) {
-        const json = await response.json();
-        console.log(json);
+        setIsMessageSent(true);
       } else if (response.status === 401) {
         console.log(response.status);
       } else {
@@ -47,6 +48,7 @@ const MessageForm = ({ user }) => {
 
   return (
     <Container>
+      {isMessageSent ? <Redirect to='/' /> : null}
       <Box>
         <Typography variant='h1'>Message</Typography>
         <form>
