@@ -1,24 +1,20 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import './App.css';
 import MessageList from './components/MessageList';
-import { apiUrl } from './utils';
+import SignIn from './components/SignIn';
+import MessageForm from './components/MessageForm';
 
 const App = () => {
   const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    const getData = async () => {
-      const response = await fetch(apiUrl + 'users/1');
-      setUser(await response.json());
-    };
-    getData();
-  }, []);
-
-  console.log(user)
+  const [token, setToken] = useState(null)
 
   return (
     <div className="App">
-      <MessageList user={user}/>
+      <h1>{user ? user.username : ''}</h1>
+      <h2>{token}</h2>
+      <MessageList user={user} />
+      <SignIn setUser={setUser} setToken={setToken} />
+      <MessageForm user={user} />
     </div>
   );
 }

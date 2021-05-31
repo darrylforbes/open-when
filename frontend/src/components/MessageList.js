@@ -15,7 +15,7 @@ const MessageList = ({ user }) => {
       <Box>
         {user && user.received_messages.map((m, index) => (
           <Card key={index}>
-            <CardActionArea href={apiUrl + 'messages/' + m.id}>
+            <CardActionArea href={apiUrl + '/messages/' + m.id}>
               <CardContent>
                 <Typography variant='h2'>{m.title}</Typography>
                 <Typography variant='h3'>Sender: {m.sender_id}</Typography>
