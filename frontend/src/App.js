@@ -14,10 +14,13 @@ const App = () => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null)
 
+  // TODO: Use react router <Redirect /> to force login when no token
+  // TODO: Update backend to require authentication then pass token
+
   return (
     <Router>
-      <h1>{user ? user.username : ''}</h1>
-      <h2>{token}</h2>
+      <h1>Hello {user ? user.username : ''}</h1>
+      <h2>token: {token}</h2>
       <ul>
         <li>
           <Link to='/'>Home</Link>

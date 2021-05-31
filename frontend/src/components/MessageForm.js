@@ -49,9 +49,6 @@ const MessageForm = ({ user }) => {
     <Container>
       <Box>
         <Typography variant='h1'>Message</Typography>
-        <Typography variant='h2'>{title}</Typography>
-        <Typography variant='h2'>{body}</Typography>
-        <Typography variant='h2'>{recipientId}</Typography>
         <form>
           <TextField
             id='title'
