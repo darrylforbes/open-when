@@ -6,9 +6,10 @@ import {
   Switch,
 } from 'react-router-dom';
 import './App.css';
+import MessageForm from './components/MessageForm';
 import MessageList from './components/MessageList';
 import SignIn from './components/SignIn';
-import MessageForm from './components/MessageForm';
+import SignUp from './components/SignUp';
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -29,12 +30,18 @@ const App = () => {
           <Link to='/signin'>Sign in</Link>
         </li>
         <li>
+          <Link to='/signup'>Sign up</Link>
+        </li>
+        <li>
           <Link to='/message'>New Message</Link>
         </li>
       </ul>
       <Switch>
         <Route path='/signin'>
           <SignIn setUser={setUser} setToken={setToken} />
+        </Route>
+        <Route path='/signup'>
+          <SignUp setUser={setUser} setToken={setToken} />
         </Route>
         <Route path='/message'>
           <MessageForm user={user} />
