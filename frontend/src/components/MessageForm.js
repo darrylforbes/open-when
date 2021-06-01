@@ -66,6 +66,7 @@ const MessageForm = ({ user }) => {
             onChange={(ev) => setBody(ev.target.value)}
             variant='outlined'
             required
+            multiline
           />
           <TextField
             id='recipientId'
