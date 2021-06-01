@@ -5,6 +5,7 @@ import {
   Route,
   Switch,
 } from 'react-router-dom';
+import { CssBaseline } from '@material-ui/core';
 import './App.css';
 import Header from './components/Header';
 import MessageForm from './components/MessageForm';
@@ -23,6 +24,7 @@ const App = () => {
 
   return (
     <Router>
+      <CssBaseline />
       <Header user={user} />
       <ul>
         <li>
