@@ -6,6 +6,7 @@ import {
   Switch,
 } from 'react-router-dom';
 import './App.css';
+import Header from './components/Header';
 import MessageForm from './components/MessageForm';
 import MessageList from './components/MessageList';
 import SignIn from './components/SignIn';
@@ -15,13 +16,14 @@ const App = () => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null)
 
+  console.log(token);
+
   // TODO: Use react router <Redirect /> to force login when no token
   // TODO: Update backend to require authentication then pass token
 
   return (
     <Router>
-      <h1>Hello {user ? user.username : ''}</h1>
-      <h2>token: {token}</h2>
+      <Header user={user} />
       <ul>
         <li>
           <Link to='/'>Home</Link>
