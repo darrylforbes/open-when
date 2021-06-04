@@ -8,14 +8,15 @@ import {
   Typography
 } from '@material-ui/core';
 import {
-  BrowserRouter as Router,
   Link,
-  Route
+  Route,
+  Switch,
+  Redirect
 } from 'react-router-dom';
 import { apiUrl } from '../utils';
 import Message from './Message';
 
-const MessageList = ({ user }) => {
+const MessageList = ({ user, token }) => {
   const [messages, setMessages] = useState([]);
   const [isRefreshing, setIsRefreshing] = useState(false);
 
@@ -35,46 +36,52 @@ const MessageList = ({ user }) => {
   }, [user, isRefreshing])
 
   return (
-    <Box>
-      <Typography variant='h1'>Message List</Typography>
-      <Button
-        variant='contained'
-        component={ Link }
-        to='/message'
-      >
-        New Message
-      </Button>
-      <Button
-        variant='contained'
-        onClick={() => setIsRefreshing(true)}
-      >
-        Refresh
-      </Button>
-      <Box>
-        {messages.map((m, index) => (
-          <Card key={index}>
-            <CardActionArea
-              component={ Link }
-              to={`/${user.username}/${m.id}`}
-            >
-              <CardContent>
-                <Typography variant='h2'>{m.title}</Typography>
-                <Typography variant='h3'>Sender: {m.sender_id}</Typography>
-                <Typography variant='h4'>{m.body}</Typography>
-                <Typography variant='h4'>{m.id}</Typography>
-              </CardContent>
-            </CardActionArea>
-          </Card>
-        ))}
-      </Box>
-      <Router>
-        {messages.map((m, index) => (
-          <Route path={`/${user.username}/${m.id}`} key={index}>
-            <Message message={m} />
-          </Route>
-        ))}
-      </Router>
-    </Box>
+    <Switch>
+      <Route exact path='/'>
+        <Box>
+          <Typography variant='h1'>Message List</Typography>
+          <Button
+            variant='contained'
+            component={ Link }
+            to='/message'
+          >
+            New Message
+          </Button>
+          <Button
+            variant='contained'
+            onClick={() => setIsRefreshing(true)}
+          >
+            Refresh
+          </Button>
+          <Box>
+            {messages.map((m, index) => (
+              <Card key={index}>
+                <CardActionArea
+                  component={ Link }
+                  to={`/${user.username}/messages/${m.id}`}
+                >
+                  <CardContent>
+                    <Typography variant='h2'>{m.title}</Typography>
+                    <Typography variant='h3'>Sender: {m.sender_id}</Typography>
+                    <Typography variant='h4'>{m.body}</Typography>
+                    <Typography variant='h4'>{m.id}</Typography>
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+            ))}
+          </Box>
+        </Box>
+        {!token ? <Redirect to='/signin' /> : null}
+      </Route>
+
+      {/* Routes for messages */}
+      {messages.map((m, index) => (
+        <Route path={`/${user.username}/messages/${m.id}`} key={index}>
+          <Message message={m} />
+          {!token ? <Redirect to='/signin' /> : null}
+        </Route>
+      ))}
+    </Switch>
   )
 }
 

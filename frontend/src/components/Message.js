@@ -5,14 +5,12 @@ import {
 } from '@material-ui/core';
 
 const Message = ({ message }) => {
-  console.log(message);
   return (
     <Box>
       <Paper>
-        <Typography variant='h1'>Message</Typography>
-        <Typography variant='h1'>Message</Typography>
-        <Typography variant='h1'>Message</Typography>
-        <Typography variant='h1'>Message</Typography>
+        <Typography variant='h1'>{message.title}</Typography>
+        <Typography variant='h2'>From: {message.sender_id}</Typography>
+        <Typography variant='body1'>{message.body}</Typography>
       </Paper>
     </Box>
   )

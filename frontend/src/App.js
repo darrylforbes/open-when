@@ -38,11 +38,11 @@ const App = () => {
           </Route>
           <Route path='/message'>
             <MessageForm user={user} />
-            {!token ? <Redirect to='signin' /> : null}
+            {!token ? <Redirect to='/signin' /> : null}
           </Route>
           <Route path='/'>
-            <MessageList user={user} />
-            {!token ? <Redirect to='signin' /> : null}
+            <MessageList user={user} token={token} />
+            {!token ? <Redirect to='/signin' /> : null}
           </Route>
         </Switch>
       </Container>
