@@ -91,7 +91,7 @@ const SignIn = ({ setUser, setToken }) => {
             Sign in
           </Button>
         </form>
-        <Link to='signup'>Need to create an account?</Link>
+        <Link to='signup'>New user? Create an account</Link>
       </Box>
     </Container>
   )

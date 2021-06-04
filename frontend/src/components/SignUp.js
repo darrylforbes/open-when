@@ -105,7 +105,7 @@ const SignUp = ({ setUser, setToken }) => {
             Sign up
           </Button>
         </form>
-        <Link to='signin'>Already have an account?</Link>
+        <Link to='signin'>Already have an account? Log in</Link>
       </Box>
     </Container>
   )
