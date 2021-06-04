@@ -80,6 +80,7 @@ const SignIn = ({ setUser, setToken }) => {
             onChange={(ev) => setPassword(ev.target.value)}
             variant='outlined'
             required
+            type='password'
           />
           <Button
             type='submit'

@@ -6,7 +6,7 @@ import {
   TextField,
   Typography
 } from '@material-ui/core';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { apiUrl } from '../utils';
 
 const SignUp = ({ setUser, setToken }) => {
@@ -94,6 +94,7 @@ const SignUp = ({ setUser, setToken }) => {
             onChange={(ev) => setPassword(ev.target.value)}
             variant='outlined'
             required
+            type='password'
           />
           <Button
             type='submit'
