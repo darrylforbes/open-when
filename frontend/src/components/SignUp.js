@@ -13,7 +13,6 @@ const SignUp = ({ setUser, setToken }) => {
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const sendRequest = async (ev) => {
     ev.preventDefault();
@@ -35,7 +34,6 @@ const SignUp = ({ setUser, setToken }) => {
     if (response.status === 200) {
       setUser(await response.json());
       getToken();
-      setIsLoggedIn(true);
     } else if (response.status === 400) {
       console.log(await response.json());
     } else {
@@ -72,7 +70,6 @@ const SignUp = ({ setUser, setToken }) => {
 
   return (
     <Container>
-      {isLoggedIn ? <Redirect to='/' /> : null}
       <Box>
         <Typography variant='h1'>Sign up</Typography>
         <form>
