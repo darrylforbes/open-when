@@ -2,7 +2,6 @@ import { useState } from 'react';
 import {
   Box,
   Button,
-  Container,
   TextField,
   Typography
 } from '@material-ui/core';
@@ -69,43 +68,41 @@ const SignUp = ({ setUser, setToken }) => {
   }
 
   return (
-    <Container>
-      <Box>
-        <Typography variant='h1'>Sign up</Typography>
-        <form>
-          <TextField
-            id='email'
-            label='Email'
-            onChange={(ev) => setEmail(ev.target.value)}
-            variant='outlined'
-            required
-            autoFocus
-          />
-          <TextField
-            id='username'
-            label='Username'
-            onChange={(ev) => setUsername(ev.target.value)}
-            variant='outlined'
-            required
-          />
-          <TextField
-            id='password'
-            label='Password'
-            onChange={(ev) => setPassword(ev.target.value)}
-            variant='outlined'
-            required
-            type='password'
-          />
-          <Button
-            type='submit'
-            onClick={sendRequest}
-          >
-            Sign up
-          </Button>
-        </form>
-        <Link to='signin'>Already have an account? Log in</Link>
-      </Box>
-    </Container>
+    <Box>
+      <Typography variant='h1'>Sign up</Typography>
+      <form>
+        <TextField
+          id='email'
+          label='Email'
+          onChange={(ev) => setEmail(ev.target.value)}
+          variant='outlined'
+          required
+          autoFocus
+        />
+        <TextField
+          id='username'
+          label='Username'
+          onChange={(ev) => setUsername(ev.target.value)}
+          variant='outlined'
+          required
+        />
+        <TextField
+          id='password'
+          label='Password'
+          onChange={(ev) => setPassword(ev.target.value)}
+          variant='outlined'
+          required
+          type='password'
+        />
+        <Button
+          type='submit'
+          onClick={sendRequest}
+        >
+          Sign up
+        </Button>
+      </form>
+      <Link to='signin'>Already have an account? Log in</Link>
+    </Box>
   )
 }
 

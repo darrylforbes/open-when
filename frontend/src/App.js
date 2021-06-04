@@ -5,7 +5,7 @@ import {
   Route,
   Switch,
 } from 'react-router-dom';
-import { CssBaseline } from '@material-ui/core';
+import { Container, CssBaseline } from '@material-ui/core';
 import './App.css';
 import Header from './components/Header';
 import MessageForm from './components/MessageForm';
@@ -26,24 +26,26 @@ const App = () => {
     <Router>
       <CssBaseline />
       <Header user={user} />
-      <Switch>
-        <Route path='/signin'>
-          <SignIn setUser={setUser} setToken={setToken} />
-          {token ? <Redirect to='/' /> : null}
-        </Route>
-        <Route path='/signup'>
-          <SignUp setUser={setUser} setToken={setToken} />
-          {token ? <Redirect to='/' /> : null}
-        </Route>
-        <Route path='/message'>
-          <MessageForm user={user} />
-          {!token ? <Redirect to='signin' /> : null}
-        </Route>
-        <Route path='/'>
-          <MessageList user={user} />
-          {!token ? <Redirect to='signin' /> : null}
-        </Route>
-      </Switch>
+      <Container>
+        <Switch>
+          <Route path='/signin'>
+            <SignIn setUser={setUser} setToken={setToken} />
+            {token ? <Redirect to='/' /> : null}
+          </Route>
+          <Route path='/signup'>
+            <SignUp setUser={setUser} setToken={setToken} />
+            {token ? <Redirect to='/' /> : null}
+          </Route>
+          <Route path='/message'>
+            <MessageForm user={user} />
+            {!token ? <Redirect to='signin' /> : null}
+          </Route>
+          <Route path='/'>
+            <MessageList user={user} />
+            {!token ? <Redirect to='signin' /> : null}
+          </Route>
+        </Switch>
+      </Container>
     </Router>
   );
 }

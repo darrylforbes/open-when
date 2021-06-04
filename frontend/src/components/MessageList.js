@@ -5,7 +5,6 @@ import {
   Card,
   CardActionArea,
   CardContent,
-  Container,
   Typography
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
@@ -31,7 +30,7 @@ const MessageList = ({ user }) => {
   }, [user, isRefreshing])
 
   return (
-    <Container>
+    <Box>
       <Typography variant='h1'>Message List</Typography>
       <Button
         variant='contained'
@@ -60,7 +59,7 @@ const MessageList = ({ user }) => {
           </Card>
         ))}
       </Box>
-    </Container>
+    </Box>
   )
 }
 

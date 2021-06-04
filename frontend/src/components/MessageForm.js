@@ -2,7 +2,6 @@ import { useState } from 'react';
 import {
   Box,
   Button,
-  Container,
   TextField,
   Typography
 } from '@material-ui/core';
@@ -47,50 +46,48 @@ const MessageForm = ({ user }) => {
   }
 
   return (
-    <Container>
+    <Box>
       {isMessageSent ? <Redirect to='/' /> : null}
-      <Box>
-        <Typography variant='h1'>Message</Typography>
-        <form>
-          <TextField
-            id='title'
-            label='Title'
-            onChange={(ev) => setTitle(ev.target.value)}
-            variant='outlined'
-            required
-            autoFocus
-          />
-          <TextField
-            id='body'
-            label='Body'
-            onChange={(ev) => setBody(ev.target.value)}
-            variant='outlined'
-            required
-            multiline
-          />
-          <TextField
-            id='recipientId'
-            label='Recipient ID'
-            onChange={(ev) => setRecipientId(ev.target.value)}
-            variant='outlined'
-            type='number'
-            required
-          />
-          <Button
-            component={ Link }
-            to='/'
-          >
-            Cancel
-          </Button>
-          <Button
-            type='submit'
-            onClick={sendRequest}
-          >
-            Send
-          </Button>
-        </form>
-      </Box>
-    </Container>
+      <Typography variant='h1'>Message</Typography>
+      <form>
+        <TextField
+          id='title'
+          label='Title'
+          onChange={(ev) => setTitle(ev.target.value)}
+          variant='outlined'
+          required
+          autoFocus
+        />
+        <TextField
+          id='body'
+          label='Body'
+          onChange={(ev) => setBody(ev.target.value)}
+          variant='outlined'
+          required
+          multiline
+        />
+        <TextField
+          id='recipientId'
+          label='Recipient ID'
+          onChange={(ev) => setRecipientId(ev.target.value)}
+          variant='outlined'
+          type='number'
+          required
+        />
+        <Button
+          component={ Link }
+          to='/'
+        >
+          Cancel
+        </Button>
+        <Button
+          type='submit'
+          onClick={sendRequest}
+        >
+          Send
+        </Button>
+      </form>
+    </Box>
   )
 }
 

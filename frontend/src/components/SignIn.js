@@ -2,7 +2,6 @@ import { useState } from 'react';
 import {
   Box,
   Button,
-  Container,
   TextField,
   Typography
 } from '@material-ui/core';
@@ -62,36 +61,34 @@ const SignIn = ({ setUser, setToken }) => {
   }
 
   return (
-    <Container>
-      <Box>
-        <Typography variant='h1'>Sign in</Typography>
-        <form>
-          <TextField
-            id='username'
-            label='Username'
-            onChange={(ev) => setUsername(ev.target.value)}
-            variant='outlined'
-            required
-            autoFocus
-          />
-          <TextField
-            id='password'
-            label='Password'
-            onChange={(ev) => setPassword(ev.target.value)}
-            variant='outlined'
-            required
-            type='password'
-          />
-          <Button
-            type='submit'
-            onClick={sendRequest}
-          >
-            Sign in
-          </Button>
-        </form>
-        <Link to='signup'>New user? Create an account</Link>
-      </Box>
-    </Container>
+    <Box>
+      <Typography variant='h1'>Sign in</Typography>
+      <form>
+        <TextField
+          id='username'
+          label='Username'
+          onChange={(ev) => setUsername(ev.target.value)}
+          variant='outlined'
+          required
+          autoFocus
+        />
+        <TextField
+          id='password'
+          label='Password'
+          onChange={(ev) => setPassword(ev.target.value)}
+          variant='outlined'
+          required
+          type='password'
+        />
+        <Button
+          type='submit'
+          onClick={sendRequest}
+        >
+          Sign in
+        </Button>
+      </form>
+      <Link to='signup'>New user? Create an account</Link>
+    </Box>
   )
 }
 
