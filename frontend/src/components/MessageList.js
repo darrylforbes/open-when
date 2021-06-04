@@ -7,8 +7,13 @@ import {
   CardContent,
   Typography
 } from '@material-ui/core';
-import { Link } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Link,
+  Route
+} from 'react-router-dom';
 import { apiUrl } from '../utils';
+import Message from './Message';
 
 const MessageList = ({ user }) => {
   const [messages, setMessages] = useState([]);
@@ -48,7 +53,10 @@ const MessageList = ({ user }) => {
       <Box>
         {messages.map((m, index) => (
           <Card key={index}>
-            <CardActionArea href={apiUrl + '/messages/' + m.id}>
+            <CardActionArea
+              component={ Link }
+              to={`/${user.username}/${m.id}`}
+            >
               <CardContent>
                 <Typography variant='h2'>{m.title}</Typography>
                 <Typography variant='h3'>Sender: {m.sender_id}</Typography>
@@ -59,6 +67,13 @@ const MessageList = ({ user }) => {
           </Card>
         ))}
       </Box>
+      <Router>
+        {messages.map((m, index) => (
+          <Route path={`/${user.username}/${m.id}`} key={index}>
+            <Message message={m} />
+          </Route>
+        ))}
+      </Router>
     </Box>
   )
 }
