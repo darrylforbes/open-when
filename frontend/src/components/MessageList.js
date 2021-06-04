@@ -39,9 +39,10 @@ const MessageList = ({ user, token }) => {
     <Switch>
       <Route exact path='/'>
         <Box>
-          <Typography variant='h1'>Message List</Typography>
+          <Typography variant='h1'>Open when...</Typography>
           <Button
             variant='contained'
+            color='primary'
             component={ Link }
             to='/message'
           >
@@ -63,8 +64,6 @@ const MessageList = ({ user, token }) => {
                   <CardContent>
                     <Typography variant='h2'>{m.title}</Typography>
                     <Typography variant='h3'>Sender: {m.sender_id}</Typography>
-                    <Typography variant='h4'>{m.body}</Typography>
-                    <Typography variant='h4'>{m.id}</Typography>
                   </CardContent>
                 </CardActionArea>
               </Card>

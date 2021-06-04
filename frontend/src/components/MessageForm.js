@@ -77,11 +77,11 @@ const MessageForm = ({ user }) => {
   return (
     <Box className={classes.box}>
       {isMessageSent ? <Redirect to='/' /> : null}
-      <Typography variant='h1'>Message</Typography>
+      <Typography variant='h1'>New Message</Typography>
       <form className={classes.form}>
         <TextField
           id='title'
-          label='Title'
+          label='Open when...'
           onChange={(ev) => setTitle(ev.target.value)}
           variant='outlined'
           required
