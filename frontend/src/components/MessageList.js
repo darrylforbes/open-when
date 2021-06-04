@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import {
   Box,
   Button,
@@ -11,6 +12,24 @@ import { Link } from 'react-router-dom';
 import { apiUrl } from '../utils';
 
 const MessageList = ({ user }) => {
+  const [messages, setMessages] = useState([]);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
+  useEffect(() => {
+    const getMessages = async () => {
+      if (user) {
+        const response = await fetch(`${apiUrl}/users/${user.id}/inbox`);
+        if (response.status === 200) {
+          setMessages(await response.json());
+          setIsRefreshing(false);
+        } else {
+          console.log(response.status);
+        }
+      };
+    }
+    getMessages();
+  }, [user, isRefreshing])
+
   return (
     <Container>
       <Typography variant='h1'>Message List</Typography>
@@ -21,8 +40,14 @@ const MessageList = ({ user }) => {
       >
         New Message
       </Button>
+      <Button
+        variant='contained'
+        onClick={() => setIsRefreshing(true)}
+      >
+        Refresh
+      </Button>
       <Box>
-        {user && user.received_messages.map((m, index) => (
+        {messages.map((m, index) => (
           <Card key={index}>
             <CardActionArea href={apiUrl + '/messages/' + m.id}>
               <CardContent>
