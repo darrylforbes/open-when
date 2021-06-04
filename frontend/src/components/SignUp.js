@@ -6,7 +6,7 @@ import {
   TextField,
   Typography
 } from '@material-ui/core';
-import { Redirect } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { apiUrl } from '../utils';
 
 const SignUp = ({ setUser, setToken }) => {
@@ -105,6 +105,7 @@ const SignUp = ({ setUser, setToken }) => {
             Sign up
           </Button>
         </form>
+        <Link to='signin'>Already have an account?</Link>
       </Box>
     </Container>
   )

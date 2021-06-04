@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import {
   BrowserRouter as Router,
-  Link,
+  Redirect,
   Route,
   Switch,
 } from 'react-router-dom';
@@ -26,32 +26,22 @@ const App = () => {
     <Router>
       <CssBaseline />
       <Header user={user} />
-      <ul>
-        <li>
-          <Link to='/'>Home</Link>
-        </li>
-        <li>
-          <Link to='/signin'>Sign in</Link>
-        </li>
-        <li>
-          <Link to='/signup'>Sign up</Link>
-        </li>
-        <li>
-          <Link to='/message'>New Message</Link>
-        </li>
-      </ul>
       <Switch>
         <Route path='/signin'>
           <SignIn setUser={setUser} setToken={setToken} />
+          {token ? <Redirect to='/' /> : null}
         </Route>
         <Route path='/signup'>
           <SignUp setUser={setUser} setToken={setToken} />
+          {token ? <Redirect to='/' /> : null}
         </Route>
         <Route path='/message'>
           <MessageForm user={user} />
+          {!token ? <Redirect to='signin' /> : null}
         </Route>
         <Route path='/'>
           <MessageList user={user} />
+          {!token ? <Redirect to='signin' /> : null}
         </Route>
       </Switch>
     </Router>

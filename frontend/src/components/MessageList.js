@@ -1,17 +1,26 @@
 import {
   Box,
+  Button,
   Card,
   CardActionArea,
   CardContent,
   Container,
   Typography
 } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 import { apiUrl } from '../utils';
 
 const MessageList = ({ user }) => {
   return (
     <Container>
       <Typography variant='h1'>Message List</Typography>
+      <Button
+        variant='contained'
+        component={ Link }
+        to='/message'
+      >
+        New Message
+      </Button>
       <Box>
         {user && user.received_messages.map((m, index) => (
           <Card key={index}>

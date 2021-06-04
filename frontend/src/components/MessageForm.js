@@ -6,7 +6,7 @@ import {
   TextField,
   Typography
 } from '@material-ui/core';
-import { Redirect } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { apiUrl } from '../utils';
 
 const MessageForm = ({ user }) => {
@@ -76,6 +76,12 @@ const MessageForm = ({ user }) => {
             type='number'
             required
           />
+          <Button
+            component={ Link }
+            to='/'
+          >
+            Cancel
+          </Button>
           <Button
             type='submit'
             onClick={sendRequest}
