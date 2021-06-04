@@ -63,7 +63,7 @@ const MessageList = ({ user, token }) => {
                 >
                   <CardContent>
                     <Typography variant='h2'>{m.title}</Typography>
-                    <Typography variant='h3'>Sender: {m.sender_id}</Typography>
+                    <Typography variant='h3'>From: {m.sender_id}</Typography>
                   </CardContent>
                 </CardActionArea>
               </Card>
