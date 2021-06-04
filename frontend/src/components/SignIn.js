@@ -2,15 +2,36 @@ import { useState } from 'react';
 import {
   Box,
   Button,
+  makeStyles,
   TextField,
   Typography
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { apiUrl } from '../utils';
 
+const useStyles = makeStyles({
+  box: {
+    alignItems: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+    margin: 20
+  },
+  form: {
+    alignItems: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+    height: 220,
+    justifyContent: 'space-between',
+    margin: 20,
+    padding: 20
+  }
+})
+
 const SignIn = ({ setUser, setToken }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+
+  const classes = useStyles();
 
   const sendRequest = async (ev) => {
     ev.preventDefault();
@@ -61,9 +82,9 @@ const SignIn = ({ setUser, setToken }) => {
   }
 
   return (
-    <Box>
+    <Box className={classes.box}>
       <Typography variant='h1'>Sign in</Typography>
-      <form>
+      <form className={classes.form}>
         <TextField
           id='username'
           label='Username'

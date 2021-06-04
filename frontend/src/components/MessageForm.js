@@ -2,17 +2,46 @@ import { useState } from 'react';
 import {
   Box,
   Button,
+  makeStyles,
   TextField,
   Typography
 } from '@material-ui/core';
 import { Link, Redirect } from 'react-router-dom';
 import { apiUrl } from '../utils';
 
+const useStyles = makeStyles({
+  box: {
+    alignItems: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+    margin: 20
+  },
+  button: {
+    width: 90,
+  },
+  buttons: {
+    display: 'flex',
+    justifyContent: 'space-around',
+    width: '100%'
+  },
+  form: {
+    alignItems: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+    height: 300,
+    justifyContent: 'space-between',
+    margin: 20,
+    padding: 20
+  }
+})
+
 const MessageForm = ({ user }) => {
   const [title, setTitle] = useState('')
   const [body, setBody] = useState('')
   const [recipientId, setRecipientId] = useState(null)
   const [isMessageSent, setIsMessageSent] = useState(false);
+
+  const classes = useStyles();
 
   const sendRequest = async (ev) => {
     ev.preventDefault();
@@ -46,10 +75,10 @@ const MessageForm = ({ user }) => {
   }
 
   return (
-    <Box>
+    <Box className={classes.box}>
       {isMessageSent ? <Redirect to='/' /> : null}
       <Typography variant='h1'>Message</Typography>
-      <form>
+      <form className={classes.form}>
         <TextField
           id='title'
           label='Title'
@@ -74,20 +103,25 @@ const MessageForm = ({ user }) => {
           type='number'
           required
         />
-        <Button
-          variant='contained'
-          component={ Link }
-          to='/'
-        >
-          Cancel
-        </Button>
-        <Button
-          variant='contained'
-          type='submit'
-          onClick={sendRequest}
-        >
-          Send
-        </Button>
+        <Box className={classes.buttons}>
+          <Button
+            className={classes.button}
+            variant='contained'
+            component={ Link }
+            to='/'
+          >
+            Cancel
+          </Button>
+          <Button
+            className={classes.button}
+            variant='contained'
+            color='primary'
+            type='submit'
+            onClick={sendRequest}
+          >
+            Send
+          </Button>
+        </Box>
       </form>
     </Box>
   )
