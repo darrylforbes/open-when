@@ -75,12 +75,14 @@ const MessageForm = ({ user }) => {
           required
         />
         <Button
+          variant='contained'
           component={ Link }
           to='/'
         >
           Cancel
         </Button>
         <Button
+          variant='contained'
           type='submit'
           onClick={sendRequest}
         >

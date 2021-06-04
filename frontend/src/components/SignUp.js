@@ -95,6 +95,7 @@ const SignUp = ({ setUser, setToken }) => {
           type='password'
         />
         <Button
+          variant='contained'
           type='submit'
           onClick={sendRequest}
         >
