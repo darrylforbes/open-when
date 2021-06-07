@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import {
-  Box,
   Button,
   Card,
   CardActionArea,
   CardContent,
-  Typography
+  Typography,
+  makeStyles
 } from '@material-ui/core';
 import {
   Link,
@@ -16,9 +16,37 @@ import {
 import { apiUrl } from '../utils';
 import Message from './Message';
 
+const useStyles = makeStyles((theme) => ({
+  card: {
+    margin: theme.spacing(),
+    width: '100%'
+  },
+  cards: {
+    display: 'flex',
+    flexWrap: 'wrap'
+  },
+  container: {
+    margin: theme.spacing(4)
+  },
+  top: {
+    alignItems: 'center',
+    display: 'flex',
+    justifyContent: 'space-between'
+  }
+  // TODO: change color of card based on its lock/read status
+  // lockedCard: {
+  // },
+  // readCard: {
+  // },
+  // unlockedCard: {
+  // },
+}));
+
 const MessageList = ({ user, token }) => {
   const [messages, setMessages] = useState([]);
   const [isRefreshing, setIsRefreshing] = useState(false);
+
+  const classes = useStyles();
 
   useEffect(() => {
     const getMessages = async () => {
@@ -38,38 +66,43 @@ const MessageList = ({ user, token }) => {
   return (
     <Switch>
       <Route exact path='/'>
-        <Box>
-          <Typography variant='h1'>Open when...</Typography>
-          <Button
-            variant='contained'
-            color='primary'
-            component={ Link }
-            to='/message'
-          >
-            New Message
-          </Button>
-          <Button
-            variant='contained'
-            onClick={() => setIsRefreshing(true)}
-          >
-            Refresh
-          </Button>
-          <Box>
+        <div className={classes.container}>
+          <div className={classes.top}>
+            <Typography variant='h1'>Open when...</Typography>
+            <div className={classes.buttons}>
+              <Button
+                variant='contained'
+                color='primary'
+                className={classes.button}
+                component={ Link }
+                to='/message'
+              >
+                New Message
+              </Button>
+              <Button
+                variant='contained'
+                onClick={() => setIsRefreshing(true)}
+              >
+                Refresh
+              </Button>
+            </div>
+          </div>
+          <div className={classes.cards}>
             {messages.map((m, index) => (
-              <Card key={index}>
+              <Card className={classes.card} key={index}>
                 <CardActionArea
                   component={ Link }
                   to={`/${user.username}/messages/${m.id}`}
                 >
                   <CardContent>
-                    <Typography variant='h2'>{m.title}</Typography>
+                    <Typography noWrap variant='h2'>{m.title}</Typography>
                     <Typography variant='h3'>From: {m.sender_id}</Typography>
                   </CardContent>
                 </CardActionArea>
               </Card>
             ))}
-          </Box>
-        </Box>
+          </div>
+        </div>
         {!token ? <Redirect to='/signin' /> : null}
       </Route>
 
