@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 import {
+  Box,
   Button,
   Card,
   CardActionArea,
   CardContent,
   Typography,
-  makeStyles
+  makeStyles,
+  useMediaQuery
 } from '@material-ui/core';
 import {
   Link,
@@ -23,18 +25,6 @@ const useStyles = makeStyles((theme) => ({
   card: {
     margin: theme.spacing(),
     width: '100%'
-  },
-  cards: {
-    display: 'flex',
-    flexWrap: 'wrap'
-  },
-  container: {
-    margin: theme.spacing(4)
-  },
-  top: {
-    alignItems: 'center',
-    display: 'flex',
-    justifyContent: 'space-between'
   }
   // TODO: change color of card based on its lock/read status
   // lockedCard: {
@@ -50,6 +40,8 @@ const MessageList = ({ user, token }) => {
   const [isRefreshing, setIsRefreshing] = useState(false);
 
   const classes = useStyles();
+
+  const matches = useMediaQuery(theme => theme.breakpoints.down('sm'))
 
   useEffect(() => {
     const getMessages = async () => {
@@ -69,10 +61,14 @@ const MessageList = ({ user, token }) => {
   return (
     <Switch>
       <Route exact path='/'>
-        <div className={classes.container}>
-          <div className={classes.top}>
+        <Box margin={4}>
+          <Box
+            alignItems='center'
+            display='flex'
+            justifyContent='space-between'
+          >
             <Typography variant='h1'>Open when...</Typography>
-            <div className={classes.buttons}>
+            <div>
               <Button
                 variant='contained'
                 className={classes.button}
@@ -90,8 +86,8 @@ const MessageList = ({ user, token }) => {
                 Refresh
               </Button>
             </div>
-          </div>
-          <div className={classes.cards}>
+          </Box>
+          <Box display='flex' flexWrap='wrap'>
             {messages.map((m, index) => (
               <Card className={classes.card} key={index}>
                 <CardActionArea
@@ -105,8 +101,8 @@ const MessageList = ({ user, token }) => {
                 </CardActionArea>
               </Card>
             ))}
-          </div>
-        </div>
+          </Box>
+        </Box>
         {!token ? <Redirect to='/signin' /> : null}
       </Route>
 
