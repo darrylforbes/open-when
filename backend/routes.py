@@ -8,17 +8,17 @@ import schemas
 router = APIRouter()
 
 
-@router.get('/users/{user_id}/inbox', response_model=list[schemas.Message])
-def read_user_inbox(user_id: int, db: Session = Depends(crud.get_db)):
-    user = crud.read_user(user_id=user_id, db=db)
+@router.get('/users/{username}/inbox', response_model=list[schemas.Message])
+def read_user_inbox(username: str, db: Session = Depends(crud.get_db)):
+    user = crud.read_user_by_username(username=username, db=db)
     if not user:
         raise HTTPException(status_code=404, detail='User does not exist')
     return user.received_messages
 
 
-@router.get('/users/{user_id}/sent', response_model=list[schemas.Message])
-def read_user_sent(user_id: int, db: Session = Depends(crud.get_db)):
-    user = crud.read_user(user_id=user_id, db=db)
+@router.get('/users/{username}/sent', response_model=list[schemas.Message])
+def read_user_sent(username: str, db: Session = Depends(crud.get_db)):
+    user = crud.read_user_by_username(username=username, db=db)
     if not user:
         raise HTTPException(status_code=404, detail='User does not exist')
     return user.sent_messages
@@ -30,9 +30,9 @@ def read_users_me(current_user: schemas.User
     return current_user
 
 
-@router.get('/users/{user_id}', response_model=schemas.User)
-def read_user(user_id: int, db: Session = Depends(crud.get_db)):
-    user = crud.read_user(user_id=user_id, db=db)
+@router.get('/users/{username}', response_model=schemas.User)
+def read_user(username: str, db: Session = Depends(crud.get_db)):
+    user = crud.read_user_by_username(username=username, db=db)
     if not user:
         raise HTTPException(status_code=404, detail='User does not exist')
     return user
