@@ -147,6 +147,7 @@ const SignUp = ({ setUser, setToken }) => {
           type='submit'
           onClick={sendRequest}
           className={classes.formElement}
+          color='primary'
         >
           Sign up
         </Button>
