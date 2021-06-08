@@ -7,7 +7,6 @@ from passlib.context import CryptContext
 from sqlalchemy.orm import Session
 from jose import JWTError, jwt
 from database import SessionLocal
-import crud
 import models
 import schemas
 
@@ -45,7 +44,7 @@ def read_current_user(token: str = Depends(oauth2_scheme),
     except JWTError:
         raise exception
 
-    user = crud.read_user_by_username(username=token_data.username, db=db)
+    user = read_user_by_username(username=token_data.username, db=db)
     if user is None:
         raise exception
 
@@ -66,7 +65,7 @@ def read_user_by_username(username: str, db: Session):
 
 
 def authenticate_user(username: str, password: str, db: Session):
-    user = crud.read_user_by_username(username=username, db=db)
+    user = read_user_by_username(username=username, db=db)
     if not user:
         return False
     if not pwd_context.verify(password, user.hashed_password):
