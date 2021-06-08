@@ -2,6 +2,7 @@ import { useState } from 'react';
 import {
   Box,
   Button,
+  Card,
   makeStyles,
   TextField,
   Typography
@@ -9,32 +10,48 @@ import {
 import { Link } from 'react-router-dom';
 import { apiUrl } from '../utils';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   box: {
     alignItems: 'center',
     display: 'flex',
     flexDirection: 'column',
-    margin: 20
+    padding: theme.spacing(2)
+  },
+  error: {
+    backgroundColor: theme.palette.error.main,
+    margin: theme.spacing(),
+    padding: theme.spacing()
   },
   form: {
     alignItems: 'center',
     display: 'flex',
     flexDirection: 'column',
-    height: 220,
     justifyContent: 'space-between',
-    margin: 20,
-    padding: 20
+    margin: theme.spacing(1),
+  },
+  formElement: {
+    margin: theme.spacing()
+  },
+  title: {
+    margin: theme.spacing(1)
   }
-})
+}));
 
 const SignIn = ({ setUser, setToken }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
   const classes = useStyles();
 
   const sendRequest = async (ev) => {
     ev.preventDefault();
+
+    // Make sure form is filled out
+    if (!username || !password) {
+      setError('Enter username and password');
+      return
+    }
 
     const data = new URLSearchParams();
     data.set('username', username);
@@ -54,8 +71,7 @@ const SignIn = ({ setUser, setToken }) => {
         setToken(json.access_token);
         setUser(await getMe(json.access_token));
       } else if (response.status === 401) {
-        // TODO: popup some error message saying invalid credentials
-        console.log('Invalid credentials');
+        setError('Invalid credentials');
       } else {
         console.log(response.status);
       }
@@ -83,13 +99,21 @@ const SignIn = ({ setUser, setToken }) => {
 
   return (
     <Box className={classes.box}>
-      <Typography variant='h1'>Sign in</Typography>
+      <Typography className={classes.title} variant='h1'>Sign in</Typography>
+      {
+        error ?
+          <Card className={classes.error}>
+            <Typography variant='body1'>{error}</Typography>
+          </Card>
+          : null
+      }
       <form className={classes.form}>
         <TextField
           id='username'
           label='Username'
           onChange={(ev) => setUsername(ev.target.value)}
           variant='outlined'
+          className={classes.formElement}
           required
           autoFocus
         />
@@ -98,6 +122,7 @@ const SignIn = ({ setUser, setToken }) => {
           label='Password'
           onChange={(ev) => setPassword(ev.target.value)}
           variant='outlined'
+          className={classes.formElement}
           required
           type='password'
         />
@@ -105,6 +130,7 @@ const SignIn = ({ setUser, setToken }) => {
           variant='contained'
           type='submit'
           onClick={sendRequest}
+          className={classes.formElement}
         >
           Sign in
         </Button>
