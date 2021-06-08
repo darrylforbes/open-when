@@ -41,7 +41,7 @@ const MessageList = ({ user, token }) => {
 
   const classes = useStyles();
 
-  const matches = useMediaQuery(theme => theme.breakpoints.down('sm'))
+  const mobile = useMediaQuery(theme => theme.breakpoints.down('sm'))
 
   useEffect(() => {
     const getMessages = async () => {
@@ -65,6 +65,7 @@ const MessageList = ({ user, token }) => {
           <Box
             alignItems='center'
             display='flex'
+            flexDirection={mobile ? 'column' : 'row'}
             justifyContent='space-between'
           >
             <Typography variant='h1'>Open when...</Typography>
