@@ -17,6 +17,9 @@ import { apiUrl } from '../utils';
 import Message from './Message';
 
 const useStyles = makeStyles((theme) => ({
+  button: {
+    margin: theme.spacing()
+  },
   card: {
     margin: theme.spacing(),
     width: '100%'
@@ -72,6 +75,7 @@ const MessageList = ({ user, token }) => {
             <div className={classes.buttons}>
               <Button
                 variant='contained'
+                className={classes.button}
                 color='primary'
                 className={classes.button}
                 component={ Link }
@@ -81,6 +85,7 @@ const MessageList = ({ user, token }) => {
               </Button>
               <Button
                 variant='contained'
+                className={classes.button}
                 onClick={() => setIsRefreshing(true)}
               >
                 Refresh
