@@ -77,7 +77,6 @@ const MessageList = ({ user, token }) => {
                 variant='contained'
                 className={classes.button}
                 color='primary'
-                className={classes.button}
                 component={ Link }
                 to='/message'
               >
