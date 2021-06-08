@@ -30,17 +30,21 @@ def read_users_me(current_user: schemas.User
     return current_user
 
 
-@router.get('/users/{username}', response_model=schemas.User)
+@router.get('/users/{username}', response_model=schemas.UserPublic)
 def read_user(username: str, db: Session = Depends(crud.get_db)):
     user = crud.read_user_by_username(username=username, db=db)
     if not user:
         raise HTTPException(status_code=404, detail='User does not exist')
-    return user
+    return {'username': user.username, 'id': user.id}
 
 
-@router.get('/users', response_model=list[schemas.User])
+@router.get('/users', response_model=list[schemas.UserPublic])
 def read_users(db: Session = Depends(crud.get_db)):
-    return crud.read_users(db=db)
+    return [
+        {'username': u.username, 'id': u.id}
+        for u
+        in crud.read_users(db=db)
+    ]
 
 
 @router.post('/users', response_model=schemas.User)

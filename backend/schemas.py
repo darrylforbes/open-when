@@ -22,16 +22,21 @@ class Message(MessageBase):
 
 
 class UserBase(BaseModel):
-    email: str
     username: str
 
 
 class UserCreate(UserBase):
+    email: str
     password: str
+
+
+class UserPublic(UserBase):
+    id: int
 
 
 class User(UserBase):
     id: int
+    email: str
     received_messages: List[Message] = []
     sent_messages: List[Message] = []
 
