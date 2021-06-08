@@ -48,19 +48,36 @@ const useStyles = makeStyles((theme) => ({
 const MessageForm = ({ user }) => {
   const [title, setTitle] = useState('')
   const [body, setBody] = useState('')
-  const [recipientId, setRecipientId] = useState(null)
+  const [recipientUsername, setRecipientUsername] = useState(null)
   const [error, setError] = useState('');
   const [isMessageSent, setIsMessageSent] = useState(false);
 
   const classes = useStyles();
 
+  const getRecipientId = async (username) => {
+    try {
+      const response = await fetch(apiUrl + '/users/' + username);
+
+      if (response.status === 200) {
+        return (await response.json()).id;
+      } else {
+        setError('Recipient does not exist');
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   const sendRequest = async (ev) => {
     ev.preventDefault();
 
-    if (!title || !body || !recipientId) {
+    if (!title || !body || !recipientUsername) {
       setError('Enter all fields');
       return
     }
+
+    const recipientId = await getRecipientId(recipientUsername);
+    if (!recipientId) return
 
     const data = {
       'title': title,
@@ -121,12 +138,11 @@ const MessageForm = ({ user }) => {
           multiline
         />
         <TextField
-          id='recipientId'
-          label='Recipient ID'
-          onChange={(ev) => setRecipientId(ev.target.value)}
+          id='recipientUsername'
+          label='Recipient Username'
+          onChange={(ev) => setRecipientUsername(ev.target.value)}
           variant='outlined'
           className={classes.formElement}
-          type='number'
           required
         />
         <Box className={[classes.buttons, classes.formElement]}>

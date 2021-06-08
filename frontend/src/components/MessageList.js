@@ -46,7 +46,7 @@ const MessageList = ({ user, token }) => {
   useEffect(() => {
     const getMessages = async () => {
       if (user) {
-        const response = await fetch(`${apiUrl}/users/${user.id}/inbox`);
+        const response = await fetch(`${apiUrl}/users/${user.username}/inbox`);
         if (response.status === 200) {
           setMessages(await response.json());
           setIsRefreshing(false);
