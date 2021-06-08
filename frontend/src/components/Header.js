@@ -16,7 +16,7 @@ const Header = ({ user }) => {
   const classes = useStyles();
 
   return (
-    <AppBar position='static'>
+    <AppBar position='sticky'>
       <Toolbar className={classes.toolbar}>
         <Typography
           variant='h1'
