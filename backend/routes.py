@@ -8,12 +8,21 @@ import schemas
 router = APIRouter()
 
 
-@router.get('/users/{username}/inbox', response_model=list[schemas.Message])
+@router.get('/users/{username}/inbox',
+            response_model=list[schemas.MessagePublic])
 def read_user_inbox(username: str, db: Session = Depends(crud.get_db)):
     user = crud.read_user_by_username(username=username, db=db)
     if not user:
         raise HTTPException(status_code=404, detail='User does not exist')
-    return user.received_messages
+    # Convert from Message to MessagePublic
+    messages = []
+    for m in user.received_messages:
+        msg = vars(m)
+        msg.pop('recipient_id')
+        msg['sender_username'] = crud.read_user(user_id=msg['sender_id'],
+                                                db=db).username
+        messages.append(msg)
+    return messages
 
 
 @router.get('/users/{username}/sent', response_model=list[schemas.Message])

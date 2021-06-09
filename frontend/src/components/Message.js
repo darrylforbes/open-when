@@ -25,7 +25,7 @@ const Message = ({ message }) => {
       <Paper className={classes.paper}>
         <div>
           <Typography variant='h1'>{message.title}</Typography>
-          <Typography variant='h2'>From: {message.sender_id}</Typography>
+          <Typography variant='h2'>From: {message.sender_username}</Typography>
         </div>
         <Typography
           className={classes.body}

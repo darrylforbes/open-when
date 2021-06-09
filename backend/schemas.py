@@ -12,6 +12,12 @@ class MessageCreate(MessageBase):
     sender_id: int
 
 
+class MessagePublic(MessageBase):
+    id: int
+    sender_id: int
+    sender_username: str
+
+
 class Message(MessageBase):
     id: int
     recipient_id: int
